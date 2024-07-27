@@ -39,7 +39,9 @@ public class PetStore {
 	inverseJoinColumns = @JoinColumn(name = "customer_id"))
 	private Set<Customer> customers = new HashSet<>();
 	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "petStore",
 			cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<Employee> employees = new HashSet<>();
+	private Set<Employee> employees = new HashSet<>();		//why is this necessary?
 }

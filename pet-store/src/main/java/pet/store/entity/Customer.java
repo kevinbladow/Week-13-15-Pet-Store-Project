@@ -33,6 +33,6 @@ public class Customer {
 	@ToString.Exclude
 	@ManyToMany(mappedBy = "customers",
 			cascade = CascadeType.PERSIST)	//this entry will persist even if the pet store is deleted
-	private Set<PetStore> petStores = new HashSet<>();
+	private Set<PetStore> petStores = new HashSet<>();   //I do not understand this
 	
 }

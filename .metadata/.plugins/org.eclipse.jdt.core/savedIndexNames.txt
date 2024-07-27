@@ -6,7 +6,6 @@ INDEX VERSION 1.134+C:\Users\kevin\Promineo\BE-Promineo-Tech\coding_projects\Wee
 2113591129.index
 4287918526.index
 1280898333.index
-2993303040.index
 1338222692.index
 2527726215.index
 1665026092.index
