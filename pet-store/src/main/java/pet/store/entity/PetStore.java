@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+	//define the PetStore object 
 @Entity
 @Data
 public class PetStore {
@@ -31,7 +32,7 @@ public class PetStore {
 	private String petStoreZip;
 	private String petStorePhone;
 	
-	@EqualsAndHashCode.Exclude
+	@EqualsAndHashCode.Exclude	//avoid recursion errors for the many to many relationship
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "pet_store_customer", 
@@ -39,7 +40,7 @@ public class PetStore {
 	inverseJoinColumns = @JoinColumn(name = "customer_id"))
 	private Set<Customer> customers = new HashSet<>();
 	
-	@EqualsAndHashCode.Exclude
+	@EqualsAndHashCode.Exclude	//avoid the recursion errors for the one to many relationship
 	@ToString.Exclude
 	@OneToMany(mappedBy = "petStore",
 			cascade = CascadeType.ALL, orphanRemoval = true)

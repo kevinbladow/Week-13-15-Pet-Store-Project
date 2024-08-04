@@ -1,0 +1,44 @@
+package pet.store.service;
+
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import pet.store.entity.PetStore;
+import pet.store.controller.model.PetStoreData;
+import pet.store.dao.PetStoreDao;
+
+@Service
+public class PetStoreService {
+	
+	//create the data layer object for petStore auto wired for JPA
+	
+	@Autowired
+	private PetStoreDao petStoreDao;
+
+	public PetStoreData savePetStore(PetStoreData petStoreData) {
+		Long petStoreId = petStoreData.getPetStoreId();
+		PetStore petStore = findOrCreatePetStore(petStoreId); 
+		
+		setFieldsInPetStore()petStore, petStoreData);
+		
+		return new PetStoreData(petStoreDao.save(petStore));
+	}
+
+	private PetStore findOrCreatePetStore(Long petStoreId) {
+		PetStore petStore;
+		
+		if(Objects.isNull(petStoreId)) {
+			Optional<PetStore> optionalStore = petStoreDao.findById(petStoreId);
+			
+			if (optionalStore.isEmpty()) {
+				throw new NoSuchElementException("Pet Store with ID = " + petStoreId +" does not exist.");
+			}
+			petStore = new PetStore();
+		}
+	}
+	
+	
+}
