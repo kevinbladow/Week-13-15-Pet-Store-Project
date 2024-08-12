@@ -15,7 +15,7 @@ public class PetStoreEmployee { //from the definition of the Employee Object
 	private String employeeJobTitle;
 
 	
-	PetStoreEmployee(Employee employee){
+	public PetStoreEmployee(Employee employee){
 		employeeId = employee.getEmployeeId();
 		employeeFirstName = employee.getEmployeeFirstName();
 		employeeLastName = employee.getEmployeeLastName();

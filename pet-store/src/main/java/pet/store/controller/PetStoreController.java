@@ -1,7 +1,12 @@
 package pet.store.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import pet.store.controller.model.PetStoreCustomer;
 import pet.store.controller.model.PetStoreData;
+import pet.store.controller.model.PetStoreEmployee;
 import pet.store.service.PetStoreService;
 
 @RestController
@@ -41,6 +48,50 @@ public class PetStoreController {
 		
 		log.info("Update Pet Store {}", petStoreId);
 		return petStoreService.savePetStore(petStoreData);
+	}
+	
+	@PostMapping("/pet_store/{petStoreId}/employee")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public PetStoreEmployee addPetStoreEmployee(@PathVariable Long petStoreId, @RequestBody PetStoreEmployee petStoreEmployee) {
+
+		log.info("Adding employee {} to Pet Store {}", petStoreEmployee, petStoreId);
+		return petStoreService.saveEmployee(petStoreId, petStoreEmployee);
+	}
+	
+	@PostMapping("/pet_store/{petStoreId}/customer")  //send new customer to pet store  table
+	@ResponseStatus(code =HttpStatus.CREATED)
+	public PetStoreCustomer addPetStoreCustomer(@PathVariable Long petStoreId, @RequestBody PetStoreCustomer petStoreCustomer) {
+		
+		log.info("Adding customer {} to Pet Store {}", petStoreCustomer, petStoreId);
+		return petStoreService.saveCustomer(petStoreId, petStoreCustomer);
+	}
+	
+	@GetMapping("/pet_store")
+	@ResponseStatus(code = HttpStatus.OK)
+	public List<PetStoreData> retrieveAllPetStores(){
+		log.info("Retrieving all Pet Stores");
+		return petStoreService.retrieveAllPetStores();
+	}
+	
+	//Retrieve a pet store by ID
+	@GetMapping("/pet_store/{petStoreId}")
+	@ResponseStatus(code = HttpStatus.OK)
+	public PetStoreData retrievePetStoreById(@PathVariable Long petStoreId) {
+	
+		log.info("Retrieving Pet Store with ID= {}", petStoreId);
+		return petStoreService.retrievePetStoreById(petStoreId);
+	}	
+	
+	//Delete a pet store by ID
+	@DeleteMapping("/pet_store/{petStoreId}")
+	public Map<String, String> deletePetStoreById(@PathVariable Long petStoreId) {
+		
+		log.info("Deleting Pet Store with ID= {}", petStoreId);
+		petStoreService.deletePetStoreById(petStoreId);
+		
+		return Map.of("message", "Deletion of Pet Store with ID=" + petStoreId + " was successful.");
+		
+		
 	}
 	
 }

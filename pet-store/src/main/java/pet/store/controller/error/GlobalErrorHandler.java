@@ -1,5 +1,6 @@
 package pet.store.controller.error;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -28,4 +29,23 @@ public class GlobalErrorHandler {
 		
 	}
 
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public Map<String,String> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+		String message = "message";
+		String statusReason = ex.toString();
+		errorOutput.put(message,statusReason);
+		return errorOutput;  
+		
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public Map<String,String> handleIllegalArgumentException(IllegalArgumentException ex) {
+		String message = "message";
+		String statusReason = ex.toString();
+		errorOutput.put(message,statusReason);
+		return errorOutput;  
+		
+	}
 }
